@@ -1,12 +1,28 @@
-# Local Netlify folder
+# Netlify
 .netlify
-/node_modules
-/idaic-portal/node_modulesnode_modules
-dist
-public/app
-.vite
 
-# Package lock files (corrupted, will be regenerated on install)
-package-lock.json
-portal/package-lock.json
+# Dependencies
+node_modules/
+portal/node_modules/
 
+# Build output
+dist/
+portal/dist/
+public/assets/
+public/app.html
+
+# Vite
+.vite/
+
+# Env files
+.env
+.env.*
+netlify/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db

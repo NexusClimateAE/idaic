@@ -5,6 +5,7 @@
   "description": "IDAIC Root Package",
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
+    "express": "^4.19.2",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.0.1",

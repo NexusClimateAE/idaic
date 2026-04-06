@@ -1,0 +1,7 @@
+node_modules
+portal/node_modules
+portal/dist
+.netlify
+.env
+*.log
+archive
