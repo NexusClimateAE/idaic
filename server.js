@@ -64,6 +64,9 @@ app.all('/.netlify/functions/:name', async (req, res) => {
   }
 });
 
+// Supabase OTP callback — load the React app so it can exchange the code for a session
+app.get('/auth/callback', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'app.html')));
+
 // Redirects (mirrors netlify.toml [[redirects]])
 app.get('/', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'login.html')));
 app.get('/app', (req, res) => res.sendFile(path.join(PUBLIC_DIR, 'app.html')));
