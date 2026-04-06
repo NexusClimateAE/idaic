@@ -11,6 +11,9 @@ ARG VITE_SUPABASE_ANON_KEY
 COPY package.json package-lock.json ./
 RUN npm install
 
+# Copy logo referenced by portal components via ../../../idaic_black.png
+COPY idaic_black.png ./
+
 # Build portal
 COPY portal/ ./portal/
 WORKDIR /app/portal
