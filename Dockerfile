@@ -25,6 +25,12 @@ RUN VITE_SUPABASE_URL=$VITE_SUPABASE_URL \
 # Rename index.html to app.html (mirrors netlify.toml build command)
 RUN mv dist/index.html dist/app.html
 
+# Build tailwind for public pages
+WORKDIR /app
+COPY public/tailwind-input.css ./public/tailwind-input.css
+COPY tailwind.public.config.js ./
+RUN npx tailwindcss -i ./public/tailwind-input.css -o ./public/tailwind.css --minify -c ./tailwind.public.config.js
+
 # Stage 2: Production image
 FROM node:20-alpine
 
@@ -46,10 +52,8 @@ COPY public/ ./public/
 # Copy the built React app into public/
 COPY --from=builder /app/portal/dist/ ./public/
 
-# Build tailwind for public pages
-COPY tailwind.public.config.js ./
-COPY public/tailwind-input.css ./public/tailwind-input.css
-RUN npx tailwindcss -i ./public/tailwind-input.css -o ./public/tailwind.css --minify -c ./tailwind.public.config.js
+# Copy compiled tailwind CSS from builder
+COPY --from=builder /app/public/tailwind.css ./public/tailwind.css
 
 EXPOSE 3000
 
