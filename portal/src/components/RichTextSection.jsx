@@ -4,15 +4,13 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import { PageMention } from '../extensions/PageMention';
-import { useUser } from '../hooks/useUser';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../config/supabase';
 import { getAvailablePages, PAGE_MAP } from '../utils/pageMentions';
 import { getProtectedUrl } from '../utils/protectedUrls';
 
 export default function RichTextSection({ section, isAdmin = false }) {
-  const { user } = useUser();
-  const { getAuthToken } = useAuth();
+  const { user, getAuthToken } = useAuth();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

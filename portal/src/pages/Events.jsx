@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import EventForm from './EventForm';
 import PortalAssets from '../components/MainEventImage';
 import Favicon from '../components/Favicon';
@@ -62,7 +63,8 @@ function isIdaicEvent(event) {
   }
 }
 
-export default function Events({ isAdminAuthenticated = false }) {
+export default function Events() {
+  const { isAdminAuthenticated } = useOutletContext();
   const { events, loading, error, refetch } = useEvents();
   const [formError, setFormError] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);

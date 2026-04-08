@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { colors } from '../config/colors';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
 
@@ -7,7 +8,8 @@ const tabs = [
   { name: 'Newsletters', key: 'newsletters' },
 ];
 
-export default function Settings({ user }) {
+export default function Settings() {
+  const { user } = useOutletContext();
   const [activeTab, setActiveTab] = useState('personal');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { colors, font } from '../config/colors';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
-import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 
 export default function UserFormView({ initialUser, onNavigateToUserAdmin }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(initialUser || null);

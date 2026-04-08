@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useUser } from '../hooks/useUser';
 import { useAuth } from '../hooks/useAuth';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
 
 export default function PersonalInfo() {
-  const { user } = useUser();
-  const { getAuthToken } = useAuth();
+  const { user, getAuthToken } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
