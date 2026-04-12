@@ -1,38 +1,23 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../config/supabase';
+import { useAuth as useAuthContext } from '../context/AuthContext';
 
+/**
+ * Compatibility hook that wraps the new AuthContext.
+ * Use this to avoid breaking existing components while refactoring.
+ */
 export function useAuth() {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const getAuthToken = async () => {
-    // Check for password login first
-    const isPasswordLogin = localStorage.getItem('idaic-password-login');
-    const localToken = localStorage.getItem('idaic-token');
-    
-    if (isPasswordLogin === 'true' && localToken) {
-      return localToken;
+  const { user, isAuthenticated, loading, logout, refresh } = useAuthContext();
+  
+  // Return the same interface as before, but backed by Context
+  return { 
+    session: user, // Mapping user to session for legacy compatibility
+    loading, 
+    user,
+    isAuthenticated,
+    logout,
+    refresh,
+    getAuthToken: async () => {
+      // Logic moved to context if needed, but keeping interface for now
+      return localStorage.getItem('idaic-token');
     }
-    
-    // Otherwise, get Supabase session token for OTP login
-    const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token;
   };
-
-  return { session, loading, getAuthToken };
 }

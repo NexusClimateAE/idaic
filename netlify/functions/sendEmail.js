@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
 
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
     // Allow custom from/reply_to from request, fallback to environment variables
-    const FROM_EMAIL = from || process.env.FROM_EMAIL || 'IDAIC Events <no-reply@idaic.nexusclimate.co>';
+    const FROM_EMAIL = from || process.env.FROM_EMAIL || 'IDAIC Events <no-reply@portal.idaic.org>';
     const REPLY_TO = reply_to || process.env.REPLY_TO || 'info@idaic.org';
 
     // If Resend is configured, use it

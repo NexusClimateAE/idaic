@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { colors } from '../config/colors';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
 import Favicon from '../components/Favicon';
@@ -7,7 +8,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Organizations({ user }) {
+export default function Organizations() {
+  const { user } = useOutletContext();
   const [organizations, setOrganizations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

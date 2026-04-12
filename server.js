@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+require('dotenv').config({ path: path.join(__dirname, 'netlify/.env') });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8888;
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const FUNCTIONS_DIR = path.join(__dirname, 'netlify/functions');
 
@@ -50,6 +51,9 @@ app.all('/.netlify/functions/:name', async (req, res) => {
 
     const context = {};
 
+    // Ensure environment variables are available to the function handler
+    // some legacy functions might rely on process.env directly, 
+    // but we ensure the adapter is clean.
     const result = await fn.handler(event, context);
 
     const statusCode = result.statusCode || 200;

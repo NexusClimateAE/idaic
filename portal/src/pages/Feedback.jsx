@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { colors, font, form as formConfig } from '../config/colors';
-import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 
 export default function FeedbackForm({ onNavigate }) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [status, setStatus] = useState('');
   const [sending, setSending] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);

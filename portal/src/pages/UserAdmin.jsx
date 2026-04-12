@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { colors, font } from '../config/colors';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
-import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -39,7 +39,7 @@ function ApproverDisplay({ approverId, action, cache, onFetch }) {
 }
 
 export default function UserAdmin({ onUserSelect }) {
-  const { user: currentUser } = useUser();
+  const { user: currentUser } = useAuth();
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const [sortDir, setSortDir] = useState('asc');

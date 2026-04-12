@@ -3,14 +3,12 @@ import { Button } from './button';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { PageMention } from '../extensions/PageMention';
-import { useUser } from '../hooks/useUser';
 import { useAuth } from '../hooks/useAuth';
 import { getAvailablePages, PAGE_MAP } from '../utils/pageMentions';
 
 export default function EditableRecentActivity({ section, isAdminAuthenticated = false }) {
   const isAdmin = isAdminAuthenticated;
-  const { user } = useUser();
-  const { getAuthToken } = useAuth();
+  const { user, getAuthToken } = useAuth();
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

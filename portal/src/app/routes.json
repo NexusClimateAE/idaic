@@ -1,0 +1,154 @@
+{
+  "basePath": "/app",
+  "routes": [
+    {
+      "id": "app-root",
+      "path": "/app",
+      "component": "App",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "home",
+      "path": "/app/home",
+      "component": "Home",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "events",
+      "path": "/app/events",
+      "component": "Events",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "events-admin",
+      "path": "/app/events-admin",
+      "component": "EventsAdmin",
+      "meta": { "authRequired": true, "roles": ["admin", "super_admin"] }
+    },
+    {
+      "id": "settings",
+      "path": "/app/settings",
+      "component": "Settings",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "organizations",
+      "path": "/app/organizations",
+      "component": "Organizations",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "projects",
+      "path": "/app/projects",
+      "component": "Projects",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "users",
+      "path": "/app/users",
+      "component": "UserAdmin",
+      "meta": { "authRequired": true, "roles": ["admin", "super_admin"] }
+    },
+    {
+      "id": "members",
+      "path": "/app/members",
+      "component": "Members",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "uk",
+      "path": "/app/uk",
+      "component": "UKChapter",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "mena",
+      "path": "/app/mena",
+      "component": "MENAChapter",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "feedback",
+      "path": "/app/feedback",
+      "component": "Feedback",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "portal-admin",
+      "path": "/app/portal-admin",
+      "component": "Admin",
+      "meta": { "authRequired": true, "roles": ["admin", "moderator"] }
+    },
+    {
+      "id": "personal-info",
+      "path": "/app/personal-info",
+      "component": "PersonalInfo",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "logo-manager",
+      "path": "/app/logo-manager",
+      "component": "LogoManager",
+      "meta": { "authRequired": true, "roles": ["admin"] }
+    },
+    {
+      "id": "protected-urls",
+      "path": "/app/protected-urls",
+      "component": "ProtectedUrls",
+      "meta": { "authRequired": true, "roles": ["admin"] }
+    },
+    {
+      "id": "content",
+      "path": "/app/content",
+      "component": "ContentIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "case-studies",
+      "path": "/app/case-studies",
+      "component": "CaseStudiesIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "climate-solutions",
+      "path": "/app/climate-solutions",
+      "component": "ClimateSolutionsIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "decarbonisation",
+      "path": "/app/decarbonisation",
+      "component": "DecarbonisationIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "uae-climate",
+      "path": "/app/uae-climate",
+      "component": "UAEClimateIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "changelog",
+      "path": "/app/changelog",
+      "component": "ChangelogIframe",
+      "meta": { "authRequired": true }
+    },
+    {
+      "id": "newuser-form",
+      "path": "/newuser-form",
+      "component": "NewUserForm",
+      "meta": { "authRequired": false }
+    },
+    {
+      "id": "newmember-signup",
+      "path": "/newmember-signup",
+      "component": "NewUserForm",
+      "meta": { "authRequired": false }
+    },
+    {
+      "id": "fallback",
+      "path": "*",
+      "redirectTo": "/app"
+    }
+  ]
+}

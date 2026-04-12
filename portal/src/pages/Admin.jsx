@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { colors } from '../config/colors';
 import UserAdmin from './UserAdmin';
 import UserFormView from './UserFormView';
@@ -15,7 +16,9 @@ const allTabs = [
   { name: 'Protected URLs', key: 'protected_urls' },
 ];
 
-export default function Admin({ user }) {
+export default function Admin() {
+  const { user } = useOutletContext();
+  
   // Debug logging
   console.log('Admin component - user:', user);
   console.log('Admin component - user role:', user?.role);
