@@ -5,7 +5,7 @@
  * After login, users are automatically redirected to the requested page.
  */
 
-const BASE_URL = 'https://idaic.nexusclimate.co';
+const BASE_URL = (import.meta.env.VITE_PORTAL_BASE_URL || window.location.origin || 'https://portal.idaic.org').replace(/\/$/, '');
 
 /**
  * Generate a protected URL for a specific page
@@ -16,17 +16,17 @@ const BASE_URL = 'https://idaic.nexusclimate.co';
  * @example
  * // UK Chapter page
  * getProtectedUrl('uk')
- * // Returns: 'https://idaic.nexusclimate.co/app?page=uk'
+ * // Returns: 'https://portal.idaic.org/app?page=uk'
  * 
  * @example
  * // MENA Chapter page
  * getProtectedUrl('mena')
- * // Returns: 'https://idaic.nexusclimate.co/app?page=mena'
+ * // Returns: 'https://portal.idaic.org/app?page=mena'
  * 
  * @example
  * // Content page
  * getProtectedUrl('content')
- * // Returns: 'https://idaic.nexusclimate.co/app?page=content'
+ * // Returns: 'https://portal.idaic.org/app?page=content'
  */
 export function getProtectedUrl(page, baseUrl = BASE_URL) {
   if (!page) {
@@ -79,7 +79,7 @@ export const ProtectedUrls = {
  * Example usage:
  * 
  * // In an email or external link:
- * <a href="https://idaic.nexusclimate.co/app?page=uk">View UK Chapter</a>
+ * <a href="https://portal.idaic.org/app?page=uk">View UK Chapter</a>
  * 
  * // Or using the utility:
  * import { getProtectedUrl } from './utils/protectedUrls';

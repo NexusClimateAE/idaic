@@ -221,7 +221,7 @@ exports.handler = async function (event, context) {
 
           // Notify info@idaic.org about new member (external form submission)
           try {
-            const baseUrl = process.env.BASE_URL || 'https://idaic.nexusclimate.co';
+            const baseUrl = process.env.PORTAL_BASE_URL || process.env.BASE_URL || 'https://portal.idaic.org';
             const notifyEmail = process.env.NEW_MEMBER_NOTIFY_EMAIL || 'info@idaic.org';
             const html = `
               <h2>New member registration</h2>

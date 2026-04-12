@@ -3,6 +3,7 @@ import { colors, font } from '../config/colors';
 import { ErrorMessage, SuccessMessage } from '../components/ErrorMessage';
 
 export default function EventsAdmin() {
+  const portalBaseUrl = (import.meta.env.VITE_PORTAL_BASE_URL || window.location.origin || 'https://portal.idaic.org').replace(/\/$/, '');
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -173,19 +174,19 @@ export default function EventsAdmin() {
             
             if (pollResponse.ok) {
               const poll = await pollResponse.json();
-              setSuccess(`Event and poll created successfully! Event URL: idaic.nexusclimate.co/events-${createdEvent.id} | Poll URL: idaic.nexusclimate.co/poll-${createdEvent.id}`);
+              setSuccess(`Event and poll created successfully! Event URL: ${portalBaseUrl}/events-${createdEvent.id} | Poll URL: ${portalBaseUrl}/poll-${createdEvent.id}`);
             } else {
-              setSuccess(`Event created successfully! Event URL: idaic.nexusclimate.co/events-${createdEvent.id}`);
+              setSuccess(`Event created successfully! Event URL: ${portalBaseUrl}/events-${createdEvent.id}`);
             }
           } else {
-            setSuccess(`Event created successfully! Event URL: idaic.nexusclimate.co/events-${createdEvent.id}`);
+            setSuccess(`Event created successfully! Event URL: ${portalBaseUrl}/events-${createdEvent.id}`);
           }
         } catch (pollErr) {
           console.error('Error creating poll:', pollErr);
-          setSuccess(`Event created successfully! Event URL: idaic.nexusclimate.co/events-${createdEvent.id}`);
+          setSuccess(`Event created successfully! Event URL: ${portalBaseUrl}/events-${createdEvent.id}`);
         }
       } else {
-        setSuccess(`Event created successfully! Event URL: idaic.nexusclimate.co/events-${createdEvent.id}`);
+        setSuccess(`Event created successfully! Event URL: ${portalBaseUrl}/events-${createdEvent.id}`);
       }
       
       await fetchEvents();
@@ -260,7 +261,7 @@ export default function EventsAdmin() {
       }
 
       const createdPoll = await response.json();
-      setSuccess(`Poll created successfully! Poll URL: idaic.nexusclimate.co/poll-${pollData.event_id}`);
+      setSuccess(`Poll created successfully! Poll URL: ${portalBaseUrl}/poll-${pollData.event_id}`);
       await fetchEvents();
       // Refresh poll data for the event
       if (pollData.event_id) {
@@ -558,7 +559,7 @@ export default function EventsAdmin() {
                         rel="noopener noreferrer"
                         className="text-orange-500 hover:underline"
                       >
-                        idaic.nexusclimate.co/events-{event.id}
+                        {`${portalBaseUrl}/events-${event.id}`}
                       </a>
                     </div>
                     {event.poll_id && (
@@ -570,7 +571,7 @@ export default function EventsAdmin() {
                           rel="noopener noreferrer"
                           className="text-blue-500 hover:underline"
                         >
-                          idaic.nexusclimate.co/poll-{event.id}
+                          {`${portalBaseUrl}/poll-${event.id}`}
                         </a>
                       </div>
                     )}
@@ -1976,7 +1977,7 @@ function EventFormModal({ event, onSave, onClose }) {
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline ml-1"
                 >
-                  idaic.nexusclimate.co/events-{createdEventId}
+                  {`${portalBaseUrl}/events-${createdEventId}`}
                 </a>
               </p>
             </div>

@@ -38,7 +38,7 @@ exports.handler = async function (event, context) {
     }
 
     const results = [];
-    const baseUrl = process.env.BASE_URL || 'https://idaic.nexusclimate.co';
+    const baseUrl = process.env.PORTAL_BASE_URL || process.env.BASE_URL || 'https://portal.idaic.org';
 
     for (const eventData of events) {
       if (!eventData.event_date) continue;

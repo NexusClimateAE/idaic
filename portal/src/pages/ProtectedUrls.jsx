@@ -4,7 +4,7 @@ import { getProtectedUrl } from '../utils/protectedUrls';
 
 export default function ProtectedUrls() {
   const [copiedUrl, setCopiedUrl] = useState(null);
-  const baseUrl = 'https://idaic.nexusclimate.co';
+  const baseUrl = (import.meta.env.VITE_PORTAL_BASE_URL || window.location.origin || 'https://portal.idaic.org').replace(/\/$/, '');
 
   const protectedPages = [
     { key: 'uk', name: 'UK Chapter', description: 'UK Chapter page with updates and member information' },

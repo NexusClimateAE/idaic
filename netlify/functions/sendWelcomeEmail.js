@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // Welcome email HTML template
-function getWelcomeEmailHTML(userName) {
+function getWelcomeEmailHTML(userName, portalBaseUrl) {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -146,7 +146,7 @@ function getWelcomeEmailHTML(userName) {
       <p>We're committed to creating a space where innovation, collaboration, and knowledge sharing thrive. Together, we can drive meaningful impact in AI and decarbonisation.</p>
       
       <p style="text-align: center;">
-        <a href="https://idaic.nexusclimate.co" class="button">Access Members Portal</a>
+        <a href="${portalBaseUrl}" class="button">Access Members Portal</a>
       </p>
       
       <p>If you have any questions or need assistance, please don't hesitate to reach out to us at <a href="mailto:info@idaic.org" style="color: #f97316;">info@idaic.org</a>.</p>
@@ -204,6 +204,8 @@ exports.handler = async function (event, context) {
     const { userId, userEmail, userName } = requestData;
     console.log('Request data:', { userId, userEmail, userName: userName || 'not provided' });
 
+    const portalBaseUrl = process.env.PORTAL_BASE_URL || process.env.BASE_URL || 'https://portal.idaic.org';
+
     if (!userId || !userEmail) {
       console.error('Missing required fields:', { userId: !!userId, userEmail: !!userEmail });
       return {
@@ -213,7 +215,7 @@ exports.handler = async function (event, context) {
     }
 
     // Generate welcome email HTML
-    const emailHTML = getWelcomeEmailHTML(userName || 'there');
+    const emailHTML = getWelcomeEmailHTML(userName || 'there', portalBaseUrl);
 
     // Send email directly via Resend API (same pattern as sendEmail.js)
     const RESEND_API_KEY = process.env.RESEND_API_KEY;

@@ -169,7 +169,7 @@ exports.handler = async function (event, context) {
             };
 
             const eventDate = formatDate(eventData.event_date);
-            const baseUrl = process.env.BASE_URL || 'https://idaic.nexusclimate.co';
+            const baseUrl = process.env.PORTAL_BASE_URL || process.env.BASE_URL || 'https://portal.idaic.org';
             const cancelUrl = `${baseUrl}/cancel-registration?token=${cancellationToken}&id=${registration.id}`;
             const eventUrl = eventData.registration_link || `${baseUrl}/events-${eventData.id}`;
 

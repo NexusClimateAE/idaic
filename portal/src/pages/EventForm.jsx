@@ -13,6 +13,7 @@ export default function EventForm({
   onDelete,
   onEventUpdate 
 }) {
+  const portalBaseUrl = (import.meta.env.VITE_PORTAL_BASE_URL || window.location.origin || 'https://portal.idaic.org').replace(/\/$/, '');
   const [readOnly, setReadOnly] = useState(true);
   const [localEvent, setLocalEvent] = useState(selectedEvent);
   const [idaicOrg, setIdaicOrg] = useState(null);
@@ -210,7 +211,7 @@ export default function EventForm({
                             rel="noopener noreferrer"
                             className="text-blue-600 hover:underline"
                           >
-                            idaic.nexusclimate.co/events-{localEvent.id}
+                            {`${portalBaseUrl}/events-${localEvent.id}`}
                           </a>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">This event has an automatic registration page</p>
