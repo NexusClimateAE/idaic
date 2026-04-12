@@ -6,6 +6,7 @@ WORKDIR /app
 # Build args for Vite (baked into the JS bundle at build time)
 ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_ANON_KEY
+ARG VITE_PORTAL_BASE_URL
 
 # Install root dependencies
 COPY package.json package-lock.json ./
@@ -20,6 +21,7 @@ WORKDIR /app/portal
 RUN npm install --force
 RUN VITE_SUPABASE_URL=$VITE_SUPABASE_URL \
     VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY \
+    VITE_PORTAL_BASE_URL=$VITE_PORTAL_BASE_URL \
     npm run build
 
 # Rename index.html to app.html (mirrors netlify.toml build command)
