@@ -1,0 +1,64 @@
+{
+  "name": "Simple Slack to QBO Receipt",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "events": ["file_shared"],
+        "additionalFields": {
+          "channel": "#receipts"
+        }
+      },
+      "id": "1",
+      "name": "Slack Receipt",
+      "type": "n8n-nodes-base.slackTrigger",
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simple OCR and data extraction\nconst fileUrl = $node['Slack Receipt'].json.file.url_private;\nconst fileName = $node['Slack Receipt'].json.file.name;\n\n// Use OCR.space free API for simplicity\nconst ocrResponse = await $http.request({\n  method: 'POST',\n  url: 'https://api.ocr.space/parse/imageurl',\n  headers: {\n    'Content-Type': 'application/x-www-form-urlencoded'\n  },\n  body: {\n    url: fileUrl,\n    apikey: 'helloworld', // Free API key\n    language: 'eng'\n  }\n});\n\nconst ocrText = ocrResponse.ParsedResults?.[0]?.ParsedText || '';\nconst lines = ocrText.split('\\n').filter(line => line.trim());\n\n// Extract vendor (first meaningful line)\nlet vendor = 'Unknown Vendor';\nfor (const line of lines) {\n  if (line.length > 2 && !line.match(/^[\\d\\s\\$\\.,]+$/)) {\n    vendor = line.trim().substring(0, 50); // Limit length\n    break;\n  }\n}\n\n// Extract amount (find largest dollar amount)\nconst amounts = ocrText.match(/\\$?([0-9,]+\\.?[0-9]*)/g) || [];\nconst numericAmounts = amounts\n  .map(a => parseFloat(a.replace(/[\\$,]/g, '')))\n  .filter(n => !isNaN(n) && n > 0);\nconst amount = numericAmounts.length > 0 ? Math.max(...numericAmounts) : 0;\n\n// Use today's date if can't extract\nconst today = new Date().toISOString().split('T')[0];\n\nreturn [{\n  vendor_name: vendor,\n  amount: amount,\n  transaction_date: today,\n  description: `Receipt: ${fileName}`,\n  raw_text: ocrText\n}];"
+      },
+      "id": "2", 
+      "name": "Extract Data",
+      "type": "n8n-nodes-base.code",
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "resource": "purchase",
+        "operation": "create",
+        "additionalFields": {
+          "vendorRef": "{{ $node['Extract Data'].json.vendor_name }}",
+          "totalAmt": "{{ $node['Extract Data'].json.amount }}",
+          "txnDate": "{{ $node['Extract Data'].json.transaction_date }}",
+          "memo": "{{ $node['Extract Data'].json.description }}"
+        }
+      },
+      "id": "3",
+      "name": "Create QBO Expense", 
+      "type": "n8n-nodes-base.quickBooksOnline",
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "channel": "={{ $node['Slack Receipt'].json.channel }}",
+        "text": "✅ Receipt processed!\\n📄 Vendor: {{ $node['Extract Data'].json.vendor_name }}\\n💰 Amount: ${{ $node['Extract Data'].json.amount }}\\n🆔 QBO ID: {{ $node['Create QBO Expense'].json.Id }}"
+      },
+      "id": "4",
+      "name": "Slack Confirmation",
+      "type": "n8n-nodes-base.slack", 
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Slack Receipt": {
+      "main": [["Extract Data"]]
+    },
+    "Extract Data": {
+      "main": [["Create QBO Expense"]]
+    },
+    "Create QBO Expense": {
+      "main": [["Slack Confirmation"]]
+    }
+  }
+}
